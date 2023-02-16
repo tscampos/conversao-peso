@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  app:
+    image: tscampos/conversao-peso:v1
+    build:
+      dockerfile: dockerfile
+      context: ./
+    ports:
+    - 80:80
