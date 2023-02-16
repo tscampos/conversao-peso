@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+
+WORKDIR /app
+
+COPY . .
+
+RUN cd /Conversao-peso && dotnet build
+
+EXPOSE 80
+
+ENTRYPOINT ["dotnet"]
+CMD ["run"]
