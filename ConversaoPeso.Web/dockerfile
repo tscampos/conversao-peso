@@ -15,19 +15,22 @@
 # COPY --from=build /app/out .
 # ENTRYPOINT ["dotnet", "ConversaoPeso.Web.dll"]
 
+
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 80
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /source
-
-# copy csproj and restore as distinct layers
-COPY *.csproj .
-RUN dotnet restore
-
-# copy and publish app and libraries
+WORKDIR /src
+COPY ["ConversaoPeso.Web/ConversaoPesoWeb.csproj", "webapp/"]
+RUN dotnet restore "ConversaoPeso.Web/ConversaoPesoWeb.csproj"
 COPY . .
-RUN dotnet publish -c Release -o /app --no-restore
+WORKDIR "/src/webapp"
+RUN dotnet build publish "ConversaoPesoWeb.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime:7.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app .
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ConversaoPesoWeb.dll"]
