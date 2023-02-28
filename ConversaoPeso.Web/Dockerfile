@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["ConversaoPeso.Web.csproj", "src/ConversaoPeso.Web/"]
 RUN dotnet restore "src/ConversaoPeso.Web/ConversaoPeso.Web.csproj"
@@ -9,7 +9,7 @@ RUN dotnet build "ConversaoPeso.Web.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "ConversaoPeso.Web.csproj" -c Release -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:5.0 AS final
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS final
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
