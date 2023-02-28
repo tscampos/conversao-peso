@@ -20,12 +20,8 @@
 
 
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /app
-# COPY ["ConversaoPeso.Web/ConversaoPesoWeb.csproj", "webapp/"]
-# RUN dotnet restore "ConversaoPeso.Web/ConversaoPesoWeb.csproj"
-# COPY . .
-# WORKDIR "/src/webapp"
 
 COPY *.csproj ./
 RUN dotnet restore
@@ -33,8 +29,7 @@ RUN dotnet restore
 COPY ./ ./
 RUN dotnet publish -c release -o out
 
-
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:3.1
 WORKDIR /app
 COPY --from=build /app/out ./
 ENTRYPOINT ["dotnet", "ConversaoPeso.Web.dll"]
