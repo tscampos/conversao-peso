@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["src/ConversaoPeso.Web.csproj", "/src/ConversaoPeso.Web/"]
+COPY ["src/ConversaoPeso.web/ConversaoPeso.Web.csproj", "/src/ConversaoPeso.Web/"]
 RUN dotnet restore "src/ConversaoPeso.Web/ConversaoPeso.Web.csproj"
 COPY . .
 WORKDIR "/src/src/ConversaoPeso.Web"
