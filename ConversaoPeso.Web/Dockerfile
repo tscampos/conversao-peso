@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY ["ConversaoPeso.Web.csproj", "src/ConversaoPeso.Web/"]
 RUN dotnet restore "src/ConversaoPeso.Web/ConversaoPeso.Web.csproj"
