@@ -4,7 +4,7 @@ services:
   app:
     image: tscampos/conversao-peso:v1
     build:
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
       context: ./
     ports:
     - 8080:80
