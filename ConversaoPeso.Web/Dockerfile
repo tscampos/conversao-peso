@@ -4,7 +4,7 @@ COPY ["ConversaoPeso.Web.csproj", "src/ConversaoPeso.Web/"]
 RUN dotnet restore "src/ConversaoPeso.Web/ConversaoPeso.Web.csproj"
 COPY . .
 WORKDIR "/src/ConversaoPeso.Web/"
-RUN dotnet build 'ConversaoPeso.Web.csproj' -c Release -o /app/build
+RUN dotnet build "src/ConversaoPeso.Web/ConversaoPeso.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "ConversaoPeso.Web.csproj" -c Release -o /app/publish
