@@ -27,16 +27,14 @@ WORKDIR /app
 # COPY . .
 # WORKDIR "/src/webapp"
 
-
 COPY *.csproj ./
 RUN dotnet restore
-
 
 COPY ./ ./
 RUN dotnet publish -c release -o out
 
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=build /app/out ./
 ENTRYPOINT ["dotnet", "ConversaoPeso.Web.dll"]
