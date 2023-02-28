@@ -1,3 +1,32 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /src
+COPY ["ConversaoPeso.Web/ConversaoPeso.Web.csproj", "src/ConversaoPeso.Web/"]
+RUN dotnet restore "src/ConversaoPeso.Web/ConversaoPeso.Web.csproj"
+COPY . .
+WORKDIR "src/src/ConversaoPeso.Web/
+RUN dotnet build "ConversaoPeso.Web.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "ConversaoPeso.Web.csproj" -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-bluster-slim AS final
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+COPY --from=publish /app/publish
+ENTRYPOINT ["dotnet", "ConversaoPeso.Web.dll"]
+
+
+
+
+
+# FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# WORKDIR /src
+# COPY ["ConversaoPeso.Web/ConversaoPesoWeb.csproj", "webapp/"]
+# RUN dotnet restore "ConversaoPeso.Web/ConversaoPesoWeb.csproj"
+# COPY . .
+# WORKDIR "/src/webapp"
+
 # FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 # WORKDIR /app
 
@@ -13,24 +42,4 @@
 # FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 # WORKDIR /app
 # COPY --from=build /app/out .
-# ENTRYPOINT ["dotnet", "ConversaoPeso.Web.dll"]
-
-
-
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /app
-EXPOSE 80
-
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
-COPY ["ConversaoPeso.Web/ConversaoPesoWeb.csproj", "webapp/"]
-RUN dotnet restore "ConversaoPeso.Web/ConversaoPesoWeb.csproj"
-COPY . .
-WORKDIR "/src/webapp"
-RUN dotnet build publish "ConversaoPesoWeb.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-# final stage/image
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ConversaoPesoWeb.dll"]
+# ENTRYPOINT ["dotnet", "ConversaoPeso..Web.dll"]
