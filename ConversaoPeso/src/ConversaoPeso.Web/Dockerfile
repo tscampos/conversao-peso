@@ -7,7 +7,7 @@ WORKDIR "/src/ConversaoPeso.Web/"
 RUN dotnet build "ConversaoPeso.Web/ConversaoPeso.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ConversaoPeso.Web.csproj" -c Release -o /app/publish
+RUN dotnet publish "ConversaoPeso/src/ConversaoPeso.Web/ConversaoPeso.Web.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS final
 WORKDIR /app
