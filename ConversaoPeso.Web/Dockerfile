@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["ConversaoPeso.Web.csproj", "src/ConversaoPeso.Web/"]
-RUN dotnet restore "ConversaoPeso.Web/ConversaoPeso.Web.csproj"
+RUN dotnet restore "src/ConversaoPeso.Web/ConversaoPeso.Web.csproj"
 COPY . .
 WORKDIR "/src/ConversaoPeso.Web/"
 RUN dotnet build "ConversaoPeso.Web/ConversaoPeso.Web.csproj" -c Release -o /app/build
